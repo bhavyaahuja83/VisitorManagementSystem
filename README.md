@@ -33,5 +33,7 @@ HTTPS, except on `localhost`; the image picker remains available as a fallback.
 Photos are stored with visitor records in MySQL.
 
 Use **Admin login** in the top-right corner to see the **Active**, **Past**, and
-**All** visitor lists. Use **Check out** on an active visitor to record the
-check-out time and move that visit to the past list.
+**All** visitor lists. The admin dashboard includes current-on-site and daily
+arrival totals, a recent check-in chart, a visitor/date search, and a CSV export
+that uses the selected status and filters. Use **Check out** on an active
+visitor to record the check-out time and move that visit to the past list.

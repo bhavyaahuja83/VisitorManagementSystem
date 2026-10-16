@@ -1,6 +1,7 @@
 (() => {
     const photoInput = document.getElementById("visitorPhoto");
     const preview = document.getElementById("photoPreview");
+    const placeholder = document.getElementById("photoPlaceholder");
     const video = document.getElementById("cameraPreview");
     const startButton = document.getElementById("startCamera");
     const takeButton = document.getElementById("takePhoto");
@@ -24,6 +25,7 @@
         previewUrl = URL.createObjectURL(file);
         preview.src = previewUrl;
         preview.hidden = false;
+        placeholder.hidden = true;
     };
 
     photoInput.addEventListener("change", () => {
