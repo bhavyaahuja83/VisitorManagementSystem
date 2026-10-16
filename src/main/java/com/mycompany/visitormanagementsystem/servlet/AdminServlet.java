@@ -23,7 +23,19 @@ public class AdminServlet extends HttpServlet {
         }
 
         try {
-            request.setAttribute("visitors", visitorRepository.findAllNewestFirst());
+            String status = request.getParameter("status");
+            if (status == null || status.isBlank()) {
+                status = "active";
+            }
+            if (!status.equals("active") && !status.equals("past") && !status.equals("all")) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unknown visitor status.");
+                return;
+            }
+            request.setAttribute("status", status);
+            request.setAttribute("visitors", visitorRepository.findByStatus(status));
+            request.setAttribute("activeCount", visitorRepository.countByStatus("active"));
+            request.setAttribute("pastCount", visitorRepository.countByStatus("past"));
+            request.setAttribute("allCount", visitorRepository.countByStatus("all"));
             request.getRequestDispatcher("/WEB-INF/views/admin.jsp").forward(request, response);
         } catch (RuntimeException e) {
             getServletContext().log("Could not load visitor records.", e);

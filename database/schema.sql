@@ -11,7 +11,10 @@
         person_to_visit VARCHAR(120) NOT NULL,
         purpose VARCHAR(500) NOT NULL,
         check_in_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        check_out_at DATETIME NULL,
+        visitor_photo MEDIUMBLOB NULL,
         PRIMARY KEY (id),
         INDEX idx_visitors_check_in_at (check_in_at),
+        INDEX idx_visitors_check_out_at (check_out_at, check_in_at),
         INDEX idx_visitors_mobile_number (mobile_number)
     ) ENGINE=InnoDB;

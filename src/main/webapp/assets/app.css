@@ -148,6 +148,14 @@ h1 {
     font-size: 14px;
 }
 
+.notice.success {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
 .success {
     color: #17613a;
     background: #eaf8f0;
@@ -177,6 +185,45 @@ h1 {
     border-radius: 999px;
     font-size: 13px;
     font-weight: 700;
+}
+
+.status-tabs {
+    display: flex;
+    gap: 8px;
+    margin-top: 28px;
+    border-bottom: 1px solid #e1e5ee;
+}
+
+.status-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 14px;
+    color: #697386;
+    border-bottom: 2px solid transparent;
+    font-size: 14px;
+    font-weight: 650;
+    text-decoration: none;
+}
+
+.status-tab span {
+    min-width: 22px;
+    padding: 2px 6px;
+    color: #606b7d;
+    background: #eef0f4;
+    border-radius: 999px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.status-tab.selected {
+    color: #4257cf;
+    border-bottom-color: #4257cf;
+}
+
+.status-tab.selected span {
+    color: #4053c0;
+    background: #edf0ff;
 }
 
 .table-card {
@@ -221,6 +268,52 @@ tbody tr:last-child td {
     text-align: center;
 }
 
+.visitor-thumbnail {
+    width: 48px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: #edf0f5;
+}
+
+.checkout-form {
+    margin: 0;
+}
+
+.button-small {
+    min-height: 32px;
+    padding: 0 10px;
+    color: #4257cf;
+    background: #f3f5ff;
+    border-color: #dce1ff;
+    font-size: 12px;
+}
+
+.status-past {
+    color: #697386;
+    font-size: 13px;
+}
+
+.photo-help {
+    margin-top: -7px;
+    font-size: 13px;
+}
+
+.camera-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.camera-preview,
+.photo-preview {
+    width: min(100%, 320px);
+    max-height: 300px;
+    object-fit: contain;
+    background: #f1f3f7;
+    border-radius: 8px;
+}
+
 @media (max-width: 600px) {
     .topbar {
         padding: 12px 5vw;
@@ -235,6 +328,10 @@ tbody tr:last-child td {
     }
 
     .page-heading {
+        align-items: flex-start;
+    }
+
+    .notice.success {
         align-items: flex-start;
     }
 }

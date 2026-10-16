@@ -7,9 +7,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import jakarta.servlet.annotation.MultipartConfig;
 import java.io.IOException;
 
 @WebServlet("/visitor")
+@MultipartConfig(maxFileSize = 5 * 1024 * 1024, maxRequestSize = 6 * 1024 * 1024)
 public class VisitorServlet extends HttpServlet {
     private final VisitorRepository visitorRepository = new VisitorRepository();
 
@@ -58,7 +61,23 @@ public class VisitorServlet extends HttpServlet {
         visitor.setPersonToVisit(personToVisit);
         visitor.setPurpose(purpose);
         try {
-            visitorRepository.save(visitor);
+            Part photoPart = request.getPart("visitorPhoto");
+            if (photoPart != null && photoPart.getSize() > 0) {
+                visitor.setVisitorPhoto(PhotoUtil.normalize(photoPart.getInputStream().readAllBytes()));
+            }
+        } catch (IllegalArgumentException e) {
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("/WEB-INF/views/visitor.jsp").forward(request, response);
+            return;
+        } catch (IOException | ServletException e) {
+            getServletContext().log("Could not read uploaded visitor photo.", e);
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unable to read the uploaded photo.");
+            return;
+        }
+
+        try {
+            Long visitorId = visitorRepository.save(visitor);
+            request.getSession(true).setAttribute("latestVisitorCardId", visitorId);
         } catch (RuntimeException e) {
             getServletContext().log("Could not save visitor entry.", e);
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,

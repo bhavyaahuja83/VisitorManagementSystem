@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -29,9 +30,16 @@ public class Visitor {
     @Column(name = "purpose", nullable = false, length = 500)
     private String purpose;
 
+    @Lob
+    @Column(name = "visitor_photo", columnDefinition = "MEDIUMBLOB")
+    private byte[] visitorPhoto;
+
     @CreationTimestamp
     @Column(name = "check_in_at", nullable = false, updatable = false)
     private LocalDateTime checkInAt;
+
+    @Column(name = "check_out_at")
+    private LocalDateTime checkOutAt;
 
     public Long getId() {
         return id;
@@ -69,11 +77,31 @@ public class Visitor {
         this.purpose = purpose;
     }
 
+    public byte[] getVisitorPhoto() {
+        return visitorPhoto;
+    }
+
+    public void setVisitorPhoto(byte[] visitorPhoto) {
+        this.visitorPhoto = visitorPhoto;
+    }
+
     public LocalDateTime getCheckInAt() {
         return checkInAt;
     }
 
+    public LocalDateTime getCheckOutAt() {
+        return checkOutAt;
+    }
+
+    public void setCheckOutAt(LocalDateTime checkOutAt) {
+        this.checkOutAt = checkOutAt;
+    }
+
     public String getCheckInAtDisplay() {
         return checkInAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+    }
+
+    public String getCheckOutAtDisplay() {
+        return checkOutAt == null ? "" : checkOutAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 }
